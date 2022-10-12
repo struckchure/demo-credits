@@ -8,7 +8,8 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "jest --watchAll"
+    "migrate": "knex migrate:latest",
+    "prod": "knex migrate:latest && node src/app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
