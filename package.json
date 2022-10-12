@@ -1,0 +1,27 @@
+{
+  "name": "lendsqr-be-test",
+  "version": "1.0.0",
+  "description": "Lending App with wallet functionality",
+  "main": "src/app.js",
+  "author": "Mohammed Al Ameen <ameenmohammed2311@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "jest --watchAll"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "joi": "^17.6.3",
+    "knex": "^2.3.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
+    "random-token": "^0.0.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
