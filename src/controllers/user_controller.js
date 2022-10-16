@@ -1,15 +1,17 @@
-const userService = require("../service/user_service");
+const userService = require("../services/user_service");
 
 class UserController {
+  // POST /user/register
   async register(req, res) {
     try {
       const user = await userService.createUser(req.body);
       res.status(201).json({ data: user });
-    } catch (err) {
-      res.status(400).json({ data: null, error: err.message });
+    } catch (error) {
+      res.status(400).json({ data: null, error: error.message });
     }
   }
 
+  // POST /user/login
   async login(req, res) {
     try {
       const user = await userService.authenticateUser(req.body);
@@ -20,8 +22,8 @@ class UserController {
           .status(400)
           .json({ data: null, error: "Invalid username or password" });
       }
-    } catch (err) {
-      res.status(400).json({ data: null, error: err.message });
+    } catch (error) {
+      res.status(400).json({ data: null, error: error.message });
     }
   }
 }
