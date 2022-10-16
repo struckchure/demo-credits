@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
+    "test": "jest",
     "migrate": "knex migrate:latest",
     "prod": "knex migrate:latest && node src/app.js"
   },
@@ -23,6 +24,7 @@
     "random-token": "^0.0.8"
   },
   "devDependencies": {
+    "jest": "^29.2.0",
     "nodemon": "^2.0.20"
   }
 }
