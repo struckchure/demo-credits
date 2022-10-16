@@ -1,24 +1,15 @@
 const db = require("../db");
 
 class UserDAO {
-  async createUser({ firstName, lastName, username, password, token }) {
+  async createUser(userData) {
     return await db("users")
-      .insert({
-        first_name: firstName,
-        last_name: lastName,
-        username,
-        password,
-        token,
-      })
-      .then((ids) => {
-        return this.getUser({ id: ids[0] });
-      });
+      .insert(userData)
+      .then((ids) => this.getUser({ id: ids[0] }));
   }
 
-  getUser(userFilter, showPassword = false) {
+  async getUser(userFilter, showPassword = false) {
     const columns = [
-      "first_name",
-      "last_name",
+      "id",
       "username",
       "token",
       "created_at",
@@ -26,16 +17,7 @@ class UserDAO {
       showPassword ? "password" : null,
     ].filter((c) => c !== null);
 
-    return db("users").select(columns).where(userFilter).first();
-  }
-
-  updateUser(userFilter, user) {
-    return db("users")
-      .where(userFilter)
-      .update(user)
-      .then((_) => {
-        return this.getUser(userFilter);
-      });
+    return await db("users").select(columns).where(userFilter).first();
   }
 }
 
