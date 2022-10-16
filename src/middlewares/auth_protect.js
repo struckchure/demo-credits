@@ -1,6 +1,6 @@
 const userDAO = require("../dao/user_dao");
 
-async function auth_required(req, res, next) {
+async function authRequired(req, res, next) {
   const authorizationHeader = req.headers.authorization;
 
   if (!authorizationHeader) {
@@ -10,9 +10,8 @@ async function auth_required(req, res, next) {
   }
 
   const token = req.headers.authorization.split(" ")[1];
-
   try {
-    let user = await userDAO({
+    let user = await userDAO.getUser({
       token,
     });
 
@@ -28,12 +27,12 @@ async function auth_required(req, res, next) {
   } catch (error) {
     return res.status(403).json({
       data: null,
-      error: "Authentication error",
+      error,
     });
   }
 }
 
-async function auth_required_or_read_only(req, next) {
+async function authRequiredOrReadOnly(req, next) {
   const SAFE_METHODS = ["GET", "OPTIONS"];
 
   if (SAFE_METHODS.includes(req.method)) {
@@ -42,6 +41,6 @@ async function auth_required_or_read_only(req, next) {
 }
 
 module.exports = {
-  auth_required,
-  auth_required_or_read_only,
+  authRequired,
+  authRequiredOrReadOnly,
 };
