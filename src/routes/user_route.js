@@ -3,7 +3,7 @@ const userRouter = express.Router();
 
 const userController = require("../controllers/user_controller");
 
-userRouter.post("/register", userController.register);
-userRouter.post("/login", userController.login);
+userRouter.post("/user/register", userController.register);
+userRouter.post("/user/login", userController.login);
 
 module.exports = userRouter;
