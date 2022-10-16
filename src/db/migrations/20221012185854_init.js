@@ -7,8 +7,6 @@ exports.up = function (knex) {
   return knex.schema
     .createTable("users", (table) => {
       table.uuid("id").primary().defaultTo(knex.raw("(UUID())"));
-      table.string("first_name");
-      table.string("last_name");
       table.string("username").unique().notNullable();
       table.string("password");
       table.string("token").nullable();
@@ -16,7 +14,7 @@ exports.up = function (knex) {
     })
     .createTable("wallets", (table) => {
       table.uuid("id").primary().defaultTo(knex.raw("(UUID())"));
-      table.string("user").index().references("users.id");
+      table.uuid("user").index().notNullable().unique().references("users.id");
       table.float("balance").defaultTo(0);
       table.timestamps(true, true);
     })
