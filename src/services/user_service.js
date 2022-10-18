@@ -6,13 +6,40 @@ const SALT_ROUNDS = 10;
 const TOKEN_LENGTH = 20;
 
 class UserService {
-  async createUser({ username, password }) {
-    const encryptedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-    return await userDAO.createUser({
+  validateUserData({ username, password }) {
+    if (!username) throw new Error("username is required");
+    if (!password) throw new Error("password is required");
+
+    return {
       username,
-      password: encryptedPassword,
-      token: randomToken(TOKEN_LENGTH),
+      password,
+    };
+  }
+
+  async checkUserExists(userFilter) {
+    const user = await userDAO.getUser(userFilter);
+    if (user) throw new Error("user already exists");
+  }
+
+  async createUser({ username, password }) {
+    const value = this.validateUserData({
+      username,
+      password,
     });
+
+    await this.checkUserExists({ username });
+
+    const encryptedPassword = await bcrypt.hash(value.password, SALT_ROUNDS);
+
+    const user = await userDAO
+      .createUser({
+        username: value.username,
+        password: encryptedPassword,
+        token: randomToken(TOKEN_LENGTH),
+      })
+      .then((user) => user);
+
+    return user;
   }
 
   async getUser(userFilter) {
