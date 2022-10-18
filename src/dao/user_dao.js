@@ -4,7 +4,7 @@ class UserDAO {
   async createUser(userData) {
     return await db("users")
       .insert(userData)
-      .then((ids) => this.getUser({ id: ids[0] }));
+      .then(async (ids) => await this.getUser({ id: ids[0] }));
   }
 
   async getUser(userFilter, showPassword = false) {
@@ -18,6 +18,15 @@ class UserDAO {
     ].filter((c) => c !== null);
 
     return await db("users").select(columns).where(userFilter).first();
+  }
+
+  async updateUser(userFilter, user) {
+    return await db("users")
+      .where(userFilter)
+      .update(user)
+      .then(async (_) => {
+        return await this.getUser(userFilter);
+      });
   }
 }
 
