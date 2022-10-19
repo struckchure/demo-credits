@@ -33,9 +33,7 @@ jobs:
           fail_on_empty: false
 
       - name: Install dependencies
-        run: |
-          docker-compose build --no-cache --force-rm
-          docker-compose up --force-recreate -d
+        run: docker-compose build --no-cache --force-rm
 
   deploy:
     runs-on: self-hosted
@@ -44,4 +42,4 @@ jobs:
 
     steps:
       - name: Deploy to AWS
-        run: docker-compose run --rm api yarn prod
+        run: docker-compose up --force-recreate -d
