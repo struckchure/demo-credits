@@ -7,7 +7,7 @@ services:
       - mysql:/var/lib/mysql
     env_file:
       - .env
-    ports:
+    expose:
       - 3306
 
   api:
