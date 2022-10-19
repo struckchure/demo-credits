@@ -1,3 +1,4 @@
+const userDAO = require('../dao/user_dao');
 const walletDAO = require("../dao/wallet_dao");
 const transactionDAO = require("../dao/transaction_dao");
 
@@ -29,17 +30,22 @@ class WalletService {
   }
 
   async transferFromWallet({ senderUsername, recieverUsername }, value) {
+    const [senderID, recieverID] = await Promise.all([
+      userDAO.getUser({ username: senderUsername }),
+      userDAO.getUser({ username: recieverUsername }),
+    ]).then((wallets) => wallets.map((wallet) => wallet.id));
+
     const [senderWalletID, recieverWalletID] = await Promise.all([
       walletDAO
-        .getWallet({ username: senderUsername })
+        .getWallet({ user: senderID })
         .then((wallet) => wallet.id),
       walletDAO
-        .getWallet({ username: recieverUsername })
+        .getWallet({ user: recieverID })
         .then((wallet) => wallet.id),
     ]);
 
     // withdraw from sender
-    await this.withdrawFromWallet({ walletID: senderWalletID }, value);
+    await this.withdrawFromWallet({ userID: senderID }, value);
 
     // create credit transaction for reciever
     await transactionDAO.createTransaction({
