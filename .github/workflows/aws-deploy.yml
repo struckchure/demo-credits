@@ -12,6 +12,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Generate .env file
+        run: |
+          echo "MYSQL_ROOT_USER=${{ secrets.MYSQL_ROOT_USER }}" >> .env
+          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+          echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" >> .env
+          echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}" >> .env
+          echo "MYSQL_TEST_DATABASE=${{ secrets.MYSQL_TEST_DATABASE }}" >> .env
+          echo "API_PORT=${{ secrets.API_PORT }}" >> .env
+
       - name: Install dependencies
         run: |
           docker-compose build --no-cache --force-rm
