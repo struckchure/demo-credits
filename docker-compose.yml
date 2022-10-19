@@ -11,10 +11,11 @@ services:
       - 3306
 
   api:
-    image: node:latest
+    build:
+      context: ./
+      dockerfile: ${PWD}/.docker/node/Dockerfile
     volumes:
-      - .:/app
-    working_dir: /app
+      - node_modules:/home/locachampion/code/node_modules:rw
     env_file:
       - .env
     expose:
@@ -32,12 +33,13 @@ services:
     expose:
       - 80
       - 443
-    restart: unless-stopped
     env_file:
       - .env
+    restart: always
 
 volumes:
   mysql:
+  node_modules:
 
 
 networks:

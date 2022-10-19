@@ -44,6 +44,4 @@ jobs:
 
     steps:
       - name: Deploy to AWS
-        run: |
-          docker-compose run --rm api yarn migrate
-          docker-compose run --rm api yarn start
+        run: docker-compose run --rm api yarn prod
