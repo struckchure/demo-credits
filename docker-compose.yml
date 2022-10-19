@@ -12,10 +12,10 @@ services:
 
   api:
     build:
-      context: ./
+      context: .
       dockerfile: ${PWD}/.docker/node/Dockerfile
     volumes:
-      - node_modules:/home/locachampion/code/node_modules:rw
+      - node_modules:/home/lendsqr/code/node_modules:rw
     env_file:
       - .env
     expose:
