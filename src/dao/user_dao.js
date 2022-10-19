@@ -4,7 +4,7 @@ class UserDAO {
   async createUser(userData) {
     return await db("users")
       .insert(userData)
-      .then(async (ids) => await this.getUser({ id: ids[0] }));
+      .then(async () => await this.getUser({ username: userData.username }));
   }
 
   async getUser(userFilter, showPassword = false) {
