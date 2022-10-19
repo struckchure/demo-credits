@@ -1,0 +1,38 @@
+name: AWS Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          docker-compose build --no-cache --force-rm
+          docker-compose run --rm api yarn
+
+  test:
+    runs-on: self-hosted
+    needs:
+      - build
+
+    steps:
+      - name: Run tests
+        run: docker-compose run --rm api yarn test
+
+  deploy:
+    runs-on: self-hosted
+    needs:
+      - test
+
+    steps:
+      - name: Deploy to AWS
+        run: |
+          docker-compose run --rm api yarn migrate
+          docker-compose run --rm api yarn start
