@@ -25,6 +25,10 @@ jobs:
           envkey_MYSQL_TEST_DATABASE: ${{ secrets.MYSQL_TEST_DATABASE }}
           envkey_API_PORT: ${{ secrets.API_PORT }}
 
+          envkey_LETSENCRYPT_HOST: ${{ secrets.LETSENCRYPT_HOST }}
+          envkey_LETSENCRYPT_EMAIL: ${{ secrets.LETSENCRYPT_EMAIL }}
+          envkey_VIRTUAL_HOST: ${{ secrets.VIRTUAL_HOST }}
+
           file_name: .env
           fail_on_empty: false
 

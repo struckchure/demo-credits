@@ -17,11 +17,24 @@ services:
     working_dir: /app
     env_file:
       - .env
-    ports:
-      - 3000:3000
+    expose:
+      - 8000
     depends_on:
       - db
-    command: yarn prod
+    command: yarn start
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ${PWD}/.docker/nginx/Dockerfile
+    depends_on:
+      - api
+    expose:
+      - 80
+      - 443
+    restart: unless-stopped
+    env_file:
+      - .env
 
 volumes:
   mysql:
