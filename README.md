@@ -8,6 +8,7 @@ Demo Credit is a wallet service. This is needed as borrowers need a wallet to re
 
 ## API Documentation
 
+Base URL: `https://mohammed-lendsqr-be-test.struckchure.com`
 Default headers:
 
 ```json

@@ -14,7 +14,7 @@ class WalletService {
     return await walletDAO.getWallet({ id: walletID }).then(async (wallet) => {
       const transaction = await transactionDAO.createTransaction({
         wallet: walletID,
-        amount,
+        value: amount,
         type: "CREDIT",
       });
 

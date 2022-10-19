@@ -12,7 +12,13 @@ class WalletDAO {
   }
 
   async getWallet(filterParams) {
-    return await db("wallets").where(filterParams).first();
+    const wallet = await db("wallets").where(filterParams).first();
+
+    if (!wallet) {
+      throw new Error("Wallet not found");
+    }
+
+    return wallet;
   }
 
   async updateWallet(walletID, wallet) {
