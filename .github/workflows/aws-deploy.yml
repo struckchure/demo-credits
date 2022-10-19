@@ -25,8 +25,8 @@ jobs:
           envkey_MYSQL_TEST_DATABASE: ${{ secrets.MYSQL_TEST_DATABASE }}
           envkey_API_PORT: ${{ secrets.API_PORT }}
 
-        file_name: .env
-        fail_on_empty: false
+          file_name: .env
+          fail_on_empty: false
 
       - name: Install dependencies
         run: |
