@@ -10,6 +10,7 @@ class TransactionDAO {
           id: transactionData.wallet,
         });
 
+        // TODO: refactor to service
         // update wallet balance if DEBIT/CREDIT
         if (transactionData.type === "DEBIT") {
           await walletDAO.updateWallet(wallet.id, {
