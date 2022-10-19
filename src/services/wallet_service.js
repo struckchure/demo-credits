@@ -7,20 +7,25 @@ class WalletService {
   }
 
   async getWallet(filterParams) {
-    return await walletDAO.getWallet(filterParams);
+    const wallet = await walletDAO.getWallet(filterParams);
+
+    if (!wallet) throw new Error("Wallet not found");
+
+    return wallet;
   }
 
   async fundWallet(walletID, amount) {
-    return await walletDAO.getWallet({ id: walletID }).then(async (wallet) => {
-      const transaction = await transactionDAO.createTransaction({
-        wallet: walletID,
-        value: amount,
-        type: "CREDIT",
-      });
+    return await walletDAO
+      .getWallet({ id: walletID })
+      .then(async () => {
+        await transactionDAO.createTransaction({
+          wallet: walletID,
+          value: amount,
+          type: "CREDIT",
+        });
 
-      const newBalance = wallet.balance + transaction.value;
-      return await walletDAO.updateWallet(walletID, { balance: newBalance });
-    });
+        return await walletDAO.getWallet({ id: walletID });
+      });
   }
 
   async transferFromWallet({ senderUsername, recieverUsername }, value) {
