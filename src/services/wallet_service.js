@@ -49,10 +49,11 @@ class WalletService {
   async withdrawFromWallet({ userID }, value) {
     const senderWallet = await walletDAO.getWallet({ user: userID });
 
+    // check if value is greater than 0
+    if (value <= 0) throw new Error("Value must be greater than 0");
+
     // check if sender has enough balance
-    if (senderWallet.balance < value) {
-      throw new Error("Insufficient funds");
-    }
+    if (senderWallet.balance < value) throw new Error("Insufficient funds");
 
     // create debit transaction for sender
     await transactionDAO.createTransaction({
