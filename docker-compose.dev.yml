@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:latest
+    volumes:
+      - mysql:/var/lib/mysql
+    env_file:
+      - .env
+    expose:
+      - 3306
+
+  api:
+    build:
+      context: .
+      dockerfile: ${PWD}/.docker/node/Dockerfile
+    volumes:
+      - .:/home/lendsqr/code
+      - api:/home/lendsqr/code/node_modules:rw
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    command: yarn dev
+
+volumes:
+  mysql:
+  api:
