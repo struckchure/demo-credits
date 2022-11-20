@@ -1,5 +1,7 @@
 # Demo Credit API
 
+[![AWS Deployment](https://github.com/struckchure/demo-credits/actions/workflows/aws-deploy.yml/badge.svg)](https://github.com/struckchure/demo-credits/actions/workflows/aws-deploy.yml)
+
 Demo Credit is a wallet service. This is needed as borrowers need a wallet to receive the loans they have been granted and also send the money for repayments.
 
 ## ER Diagram
